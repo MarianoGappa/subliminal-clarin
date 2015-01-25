@@ -1,6 +1,18 @@
 <html>
 <head>
 <style>
+input {
+    margin-bottom: 20px;
+    font-size: 18px;
+    width: 400px;
+    height: 50px;
+    padding: 10px;
+}
+
+body {
+    background-color: #EEE;
+    font-family: Roboto, Arial, helvetica, clean, sans-serif;
+}
 .valid {
     border: 1px solid green;
 }
@@ -10,12 +22,12 @@
 }
 
 .articleTitle {
-font-weight: bolder;
-font-size: 22px;
-color: white;
-background-color: red;
-padding: 3px; 
-margin-left: 10px;
+    font-weight: bolder;
+    font-size: 22px;
+    color: white;
+    background-color: red;
+    padding: 3px; 
+    margin-left: -150px;
 }
 .sectionTitle {
     font-weight: bolder;
@@ -27,8 +39,21 @@ margin-left: 10px;
     padding-top: 10px;
     width: 250px;
 }
+#main {
+    
+    text-align: center;
+}
 #text {
-    font-family: Roboto, Arial, helvetica, clean, sans-serif;
+    display: inline-block;
+    margin-top: 3px;
+}
+.box {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 1px 1px 6px 1px #ccc;
+    display: inline-block;
+    padding: 25px;
 }
 article#main {
     left: 100px;
@@ -38,13 +63,17 @@ b { color: red;}
 </head>
 <body>
 <article id="main">
-<input type="text" id="input" onkeyup="calculate()"></textarea>
-<p id="text">
+<input type="text" id="input" onkeyup="calculate()" placeholder="Busc&aacute; la frase escondida">
+<br/>
+<div class="box">
+<span class='articleTitle'>Chapa</span><br/>
+<div id="text">
 
-</p>
+</div>
+</div>
 </article>
 <script>
-var text = ["<span class='articleTitle'>Chapa</span>",
+var text = [
 "<div class='articleBody'><span class='sectionTitle'>Nihiliquitilicatuit.</span>",
 "Cupeiro cati, tumEd digma feu",
 "faciliquat num do eui euiscipisi",
@@ -87,7 +116,7 @@ function calculate() {
         if(text[textIndex] == ">")
             ignore = false;
 
-        if(!ignore && inputIndex < input.length && input[inputIndex] == text[textIndex]) {
+        if(!ignore && inputIndex < input.length && input[inputIndex] == text[textIndex].toLowerCase()) {
             inputIndex++;
             newText += "<b>[" + text[textIndex] + "]</b>";
         } else {
