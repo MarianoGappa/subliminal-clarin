@@ -1,0 +1,121 @@
+<html>
+<head>
+<style>
+.valid {
+    border: 1px solid green;
+}
+
+.invalid {
+    border: 1px solid red;
+}
+
+.articleTitle {
+font-weight: bolder;
+font-size: 22px;
+color: white;
+background-color: red;
+padding: 3px; 
+margin-left: 10px;
+}
+.sectionTitle {
+    font-weight: bolder;
+}
+.articleBody {
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    padding-left: 10px;
+    padding-top: 10px;
+    width: 250px;
+}
+#text {
+    font-family: Roboto, Arial, helvetica, clean, sans-serif;
+}
+article#main {
+    left: 100px;
+}
+b { color: red;}
+</style>
+</head>
+<body>
+<article id="main">
+<input type="text" id="input" onkeyup="calculate()"></textarea>
+<p id="text">
+
+</p>
+</article>
+<script>
+var text = ["<span class='articleTitle'>Chapa</span>",
+"<div class='articleBody'><span class='sectionTitle'>Nihiliquitilicatuit.</span>",
+"Cupeiro cati, tumEd digma feu",
+"faciliquat num do eui euiscipisi",
+"blandinga commodi amconsed",
+"tetum quismodolore euis aute",
+"minsidunt atetum zzrit dit vo-",
+"lortisi.",
+"",
+"<span class='sectionTitle'>Nihiliquitilicatuit.</span>",
+"Cupeiro cati, tumEd digma feu",
+"faciliquat num do eui euiscipisi",
+"blandinga commodi amconsed",
+"tetum quismodolore euis aute",
+"minsidunt atetum zzrit dit vo-",
+"lortisi.Luptat, veliqui ssequisl",
+"iustrud tincipid elit velit nulluO-",
+"ns del dolendrer accum quam",
+"do con esse con hendre vercili-",
+"quisl iriurem zzrilla consequatie",
+"dolum nit loerm iure ea consed",
+"dolobor incil endigna feugait",
+"eugiam, velenisl ulla ad molessit</div>"].join("<br/>");
+document.getElementById("text").innerHTML = text;
+
+
+function calculate() {
+    var input = normaliseInput(document.getElementById("input").value);
+    console.log(input)
+    var newText = "";
+
+    var inputIndex = 0;
+    var textIndex = 0;
+    var ignore = false;
+
+
+
+    while(textIndex < text.length) {
+        if(text[textIndex] == "<")
+            ignore = true;
+        if(text[textIndex] == ">")
+            ignore = false;
+
+        if(!ignore && inputIndex < input.length && input[inputIndex] == text[textIndex]) {
+            inputIndex++;
+            newText += "<b>[" + text[textIndex] + "]</b>";
+        } else {
+            newText += text[textIndex];
+        }
+        textIndex++;
+    }
+
+    document.getElementById("text").innerHTML = newText
+    if(inputIndex == input.length) {
+        document.getElementById("input").className = "valid"
+    } else {
+        document.getElementById("input").className = "invalid"
+    }
+}
+
+function normaliseInput(input) {
+    return input.toLowerCase().
+            replace(/ /g, "").
+            replace(/á/g, "a").
+            replace(/é/g, "e").
+            replace(/í/g, "i").
+            replace(/ó/g, "o").
+            replace(/ú/g, "u").
+            replace(/ñ/g, "n")
+}
+
+
+</script>
+</body>
+</html>
