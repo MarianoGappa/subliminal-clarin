@@ -70,7 +70,18 @@ body {
 #footer a:hover {
     text-decoration: underline;
 }
-
+.sharehidden {
+    display: hidden !important;
+}
+.share {
+    display: inline-block;
+    text-align: center;
+    color: CCC;
+}
+#share_box {
+    text-align: center;
+    padding-top: 50px;
+}
 article#main {
     left: 100px;
 }
@@ -80,15 +91,18 @@ b { color: red;}
 </head>
 <body>
 <article id="main">
-<input type="text" id="input" onkeyup="calculate()" placeholder="Busc&aacute; la frase escondida">
+<input type="text" id="input" onkeyup="calculate(); share();" placeholder="Busc&aacute; la frase escondida">
 <br/>
 <div class="box">
 <span class='articleTitle'>Chapa</span><br/>
 <div id="text">
 
 </div>
-</div>
 </article>
+<div id="share_box">
+<div id="share" class="sharehidden"></div>
+</div>
+</div>
 <div id="footer"><a href="https://twitter.com/MarianoGappa">@MarianoGappa</a> - <a href="https://github.com/MarianoGappa/subliminal-clarin">Source Code</a> - <a href="https://github.com/MarianoGappa/subliminal-clarin/issues">Bug Report</a></div>
 <script>
 var text = [
@@ -116,10 +130,24 @@ var text = [
 "eugiam, velenisl ulla ad molessit</div>"].join("<br/>");
 document.getElementById("text").innerHTML = text;
 
+if(getParameterByName("q")) {
+    document.getElementById("input").value = decodeURI(getParameterByName("q"))
+    calculate();
+    share();
+}
+
+function share() {
+    if(document.getElementById("input").value) {
+        document.getElementById("share").innerHTML = "<strong>Compart&iacute; tu hallazgo</strong><br/>http://marianogappa.github.io/subliminal-clarin?q=" + encodeURI(document.getElementById("input").value)
+        document.getElementById("share").className = "share"
+    } else {
+        document.getElementById("share").className = "sharehidden"
+    }
+}
+
 
 function calculate() {
     var input = normaliseInput(document.getElementById("input").value);
-    console.log(input)
     var newText = "";
 
     var inputIndex = 0;
@@ -162,6 +190,12 @@ function normaliseInput(input) {
             replace(/ñ/g, "n")
 }
 
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 
 </script>
 <script>
